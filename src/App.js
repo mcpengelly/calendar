@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./App.css";
+import React, { Component } from 'react';
+import './App.css';
 
 class App extends Component {
   constructor() {
@@ -14,23 +14,18 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">...</h1>
         </header>
-        <p className="App-intro">
-        </p>
-        <input
-          type="button"
-          onClick={this.onTestClick.bind(this)}
-          value="testAPI"
-        />
+        <p className="App-intro" />
+        <input type="button" onClick={this.onTestClick.bind(this)} value="testAPI" />
       </div>
     );
   }
   onTestClick() {
-    console.log("clicked!");
+    console.log('clicked!');
     this.fetchPosts();
   }
 
   async fetchPosts() {
-    const posts = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const posts = await fetch('https://jsonplaceholder.typicode.com/posts');
     const data = await posts.json();
     console.log(data);
     // this.setState({ posts: data });
