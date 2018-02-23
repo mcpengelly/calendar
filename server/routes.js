@@ -3,7 +3,7 @@ const db = pgp('postgres://matthewpengelly:postgres@localhost:5432/calendar');
 const _ = require('lodash');
 const uuid = require('uuid');
 
-const routes = (app) => {
+const routes = app => {
 	app.get('/timesheets', async (req, res) => {
 		let result;
 		try {
@@ -71,11 +71,11 @@ const routes = (app) => {
 	});
 };
 
-const _snakeKeys = (key) => {
+const _snakeKeys = key => {
 	return _.snakeCase(key);
 };
 
-const _prepValueAccessors = (val) => {
+const _prepValueAccessors = val => {
 	return '${' + val + '}';
 };
 
