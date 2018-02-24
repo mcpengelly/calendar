@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'; // wraps the app component for access to material-ui components
 import RaisedButton from 'material-ui/RaisedButton';
 import './App.css';
