@@ -11,6 +11,7 @@ class FbLoginButton extends Component {
 			<div>
 				<RaisedButton label="User" onClick={this.onUserClick.bind(this)} />
 				<a href="http://localhost:5000/login/facebook">login with facebook</a>
+				<a href="/login/facebook">login</a>
 			</div>
 		);
 	}

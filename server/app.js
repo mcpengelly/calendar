@@ -106,8 +106,8 @@ server.use(bodyParser.json());
 // require('./routes.js')(server);
 
 // react: Always return the main index.html, so react-server router the route in the client
-// server.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
-// });
+server.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 module.exports = server;
