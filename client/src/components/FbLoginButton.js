@@ -9,32 +9,14 @@ class FbLoginButton extends Component {
 	render() {
 		return (
 			<div>
-				<RaisedButton
-					label="Login with Facebook"
-					onClick={this.onFbLoginButtonClick.bind(this)}
-				/>
-				<RaisedButton
-					label="Profile"
-					onClick={this.onProfileClick.bind(this)}
-				/>
-				<RaisedButton
-					label="User"
-					onClick={this.onUserClick.bind(this)}
-				/>
-				<a href="http://localhost:3000/login/facebook">login with facebook</a>
-				<a href="http://localhost:3000/login">login</a>
+				<RaisedButton label="User" onClick={this.onUserClick.bind(this)} />
+				<a href="http://localhost:5000/login/facebook">login with facebook</a>
 			</div>
 		);
 	}
-	onFbLoginButtonClick() {
-		fetch('/login/facebook', { mode: 'no-cors' });
-	}
-	onProfileClick() {
-		// window.location.href = '/login/facebook'
-		// fetch('http://localhost:5000/login/facebook');
-	}
+
 	onUserClick() {
-		fetch('/user')
+		fetch('/user');
 	}
 }
 
