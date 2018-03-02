@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import leftPad from 'left-pad';
 
 import TimesheetList from './TimesheetList';
+import BarChart from './BarChart';
 
 // a "smart" component that has state
 //  state: {
@@ -30,7 +31,7 @@ class TimesheetForm extends Component {
 				<TextField id="hourInput" label="hours" onChange={this.onHoursChange.bind(this)} />
 				<DatePicker id="dayInput" hintText="day" onChange={this.onDayChange.bind(this)} />
 				<RaisedButton label="submit" onClick={this.onSubmitClick.bind(this)} />
-				<TimesheetList timesheets={this.state.timesheets} />
+				<BarChart timesheets={this.state.timesheets} />
 			</div>
 		);
 	}

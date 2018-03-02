@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'; // wraps the
 import './App.css';
 
 import TimesheetForm from './components/TimesheetForm';
-import LoginForm from './components/LoginForm';
 
 class App extends Component {
 	constructor() {
@@ -16,7 +15,6 @@ class App extends Component {
 				<div className="App">
 					<p className="App-intro" />
 
-					<LoginForm />
 					<TimesheetForm />
 				</div>
 			</MuiThemeProvider>
