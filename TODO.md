@@ -1,6 +1,6 @@
 ### TODO
 BE:
-- setup users API
+- setup users API - done
 - setup user auth
 - seperate database configuration from routes file
 - serverside rendering?
