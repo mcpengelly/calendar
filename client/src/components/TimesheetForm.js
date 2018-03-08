@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import DatePicker from 'material-ui/DatePicker';
-import TextField from 'material-ui/TextField';
-import leftPad from 'left-pad';
+import React, { Component } from 'react'
+import RaisedButton from 'material-ui/RaisedButton'
+import DatePicker from 'material-ui/DatePicker'
+import TextField from 'material-ui/TextField'
+import moment from 'moment'
 
-import TimesheetList from './TimesheetList';
-import BarChart from './BarChart';
+import TimesheetList from './TimesheetList'
+import BarChart from './BarChart'
 
 // a "smart" component that has state
 //  state: {
@@ -14,61 +14,87 @@ import BarChart from './BarChart';
 //      day: a string representing the date of the timesheet entered to be sent to backend
 //  }
 class TimesheetForm extends Component {
-	constructor() {
-		super();
+  constructor (props) {
+    super(props)
 
-		this.idCounter = 1;
-		this.state = {
-			timesheets: [],
-			day: '',
-			hours: ''
-		};
-	}
+    this.idCounter = 1
+    this.state = {
+      timesheets: [],
+      day: null,
+      hours: ''
+    }
+  }
 
-	render() {
-		return (
-			<div>
-				<TextField id="hourInput" label="hours" onChange={this.onHoursChange.bind(this)} />
-				<DatePicker id="dayInput" hintText="day" onChange={this.onDayChange.bind(this)} />
-				<RaisedButton label="submit" onClick={this.onSubmitClick.bind(this)} />
-				<BarChart timesheets={this.state.timesheets} />
-			</div>
-		);
-	}
+  render () {
+    return (
+      <div
+        style={{
+          width: '50%',
+          margin: 'auto',
+          border: '1px solid blue'
+        }}
+      >
+        <TextField
+          id='hourInput'
+          value={this.state.hours}
+          label='hours'
+          onChange={this.onHoursChange.bind(this)}
+        />
+        <DatePicker
+          id='dayInput'
+          hintText='day'
+          onChange={this.onDayChange.bind(this)}
+          container='inline'
+        />
+        <RaisedButton label='submit' onClick={this.onSubmitClick.bind(this)} />
+        <BarChart timesheets={this.state.timesheets} />
+      </div>
+    )
+  }
 
-	onSubmitClick(e) {
-		//todo: access state for day and hours and send POST request to '/timesheets'
-		const timesheet = {
-			id: this.idCounter++,
-			hours: this.state.hours,
-			day: this.state.day
-		};
-		this.setState({
-			timesheets: this.state.timesheets.concat(timesheet)
-		});
-	}
+  // change handlers
+  onHoursChange (e) {
+    this.setState({ hours: e.currentTarget.value })
+  }
 
-	// change handlers
-	onHoursChange(e) {
-		console.log('hours value:', e.currentTarget.value);
-		this.setState({ hours: e.currentTarget.value });
-	}
+  onDayChange (e, date) {
+    this.setState({ day: date })
+  }
 
-	onDayChange(e, date) {
-		const input = this._formatDate(date);
-		this.setState({ day: input });
-	}
+  componentDidMount () {
+    this.setState({
+      timesheets: [
+        { day: new Date(2015, 4, 3), hours: 5 },
+        { day: new Date(2017, 1, 1), hours: 7 },
+        { day: new Date(2018, 5, 7), hours: 5 },
+        { day: new Date(2019, 1, 1), hours: 5 },
+        { day: new Date(2018, 2, 6), hours: 2 },
+        { day: new Date(2017, 4, 3), hours: 5 },
+        { day: new Date(2019, 1, 1), hours: 10 },
+        { day: new Date(2018, 5, 11), hours: 10 }
+      ]
+    })
+  }
 
-	/**
-	 * _formatDate takes a date and formats it according to format: yyyy-mm-dd
-	 * returns a formatted date string
-	 */
-	_formatDate(date) {
-		const y = date.getFullYear();
-		const m = leftPad(date.getMonth() + 1, 2, '0'); // zero indexed month number
-		const d = leftPad(date.getDate(), 2, '0');
-		return `${y}-${m}-${d}`;
-	}
+
+  onSubmitClick (e) {
+    if (!this.state.day || !this.state.hours) {
+      console.log('missing input fields')
+      return
+    }
+    // todo: access state for day and hours and send POST request to '/timesheets'
+    const timesheet = {
+      id: this.idCounter++,
+      hours: parseFloat(this.state.hours),
+      formatted_day: moment(this.state.day).format('YYYY/MM/DD'),
+      day: this.state.day
+    }
+    this.setState({
+      timesheets: this.state.timesheets.concat(timesheet),
+      day: null,
+      hours: ''
+    })
+  }
 }
 
-export default TimesheetForm;
+export default TimesheetForm
