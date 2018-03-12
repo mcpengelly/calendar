@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField'
 import moment from 'moment'
 
 import TimesheetList from './TimesheetList'
-import BarChart from './BarChart'
+import ZoomableBarChart from './ZoomableBarChart'
 
 // a "smart" component that has state
 //  state: {
@@ -47,7 +47,7 @@ class TimesheetForm extends Component {
           container='inline'
         />
         <RaisedButton label='submit' onClick={this.onSubmitClick.bind(this)} />
-        <BarChart timesheets={this.state.timesheets} />
+        <ZoomableBarChart timesheets={this.state.timesheets} />
       </div>
     )
   }

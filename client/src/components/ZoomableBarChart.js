@@ -17,7 +17,7 @@ const style = {
   margin: 'auto'
 }
 
-export default class BarChart extends Component {
+export default class ZoomableBarChart extends Component {
   constructor () {
     super()
     const year = new Date().getFullYear()
