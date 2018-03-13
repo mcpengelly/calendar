@@ -33,7 +33,6 @@ export default class ZoomableBarChart extends Component {
     this.setState({ zoomDomain: domain })
   }
 
-
   render () {
     return (
       <div style={style}>

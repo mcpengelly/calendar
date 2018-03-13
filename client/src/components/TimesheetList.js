@@ -1,23 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import Timesheet from './Timesheet'
 
-//a "dumb" render component that simply takes input from props and renders it accordingly
+// a "dumb" render component that simply takes input from props and renders it accordingly
 class TimesheetList extends Component {
-  render() {
-    const sheets = this.props.timesheets;
-    let timesheets = sheets.map(sheet => {
+  render () {
+    let timesheets = this.props.timesheets.map(sheet => {
       return (
-        <li key={sheet.id}>
-          hours: {sheet.hours} on date: {sheet.day}
-        </li>
-      );
-    });
+        <Timesheet
+          key={sheet.id}
+          id={sheet.id}
+          hours={sheet.hours}
+          day={sheet.day}
+          formatted_day={sheet.formatted_day}
+          deleteTimesheet={this.props.deleteTimesheet.bind(this)}
+          updateTimesheet={this.props.updateTimesheet.bind(this)}
+        />
+      )
+    })
 
-    return (
-      <div>
-        <ul>{timesheets}</ul>
-      </div>
-    );
+    return <div>{timesheets}</div>
   }
 }
 
-export default TimesheetList;
+export default TimesheetList
