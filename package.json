@@ -1,23 +1,32 @@
 {
-  "name": "test-fe-be-linking",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "lodash": "^4.17.5",
-    "morgan": "^1.9.0",
-    "pg-promise": "^7.5.4",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1",
-    "uuid": "^3.2.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "buildall": "npm run build && node server"
-  }
+	"name": "backend",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"cors": "^2.8.4",
+		"express": "^4.16.2",
+		"express-http-proxy": "^1.1.0",
+		"express-session": "^1.15.6",
+		"left-pad": "^1.2.0",
+		"lodash": "^4.17.5",
+		"morgan": "^1.9.0",
+		"nodemon": "^1.15.1",
+		"passport": "^0.4.0",
+		"passport-facebook": "^2.1.1",
+		"passport-google-oauth": "^1.0.0",
+		"passport-google-oauth20": "^1.0.0",
+		"passport-jwt": "^3.0.1",
+		"pg-promise": "^7.5.4",
+		"uuid": "^3.2.1",
+		"victory": "^0.25.6"
+	},
+	"scripts": {
+		"client": "cd client && yarn start",
+		"server": "nodemon server/index.js",
+		"dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+	},
+	"devDependencies": {
+		"concurrently": "^3.5.1"
+	}
 }

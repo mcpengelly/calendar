@@ -1,22 +1,27 @@
 ### TODO
 BE:
-- setup users API
+- setup users API - done
 - setup user auth
+- seperate database configuration from routes file
+- serverside rendering?
 
 FE:
 - make backend request to Create and Read timesheet data from db timesheet datamodel
 	{day(date), hours(number)}
-- start using material ui
 - setup user login ui
 - include/setup d3react
+- create a smart component and dumb component for listing timesheets
 
 ### Done
 
 BE:
-- setup example mock API request with typicode: done
+- setup example mock API request with typicode
 
 FE:
-- link backend and front end: done
-- hookup postgres: done
-- setup timesheet api: done
+- start using material ui
+- link backend and front end
+- hookup postgres
+- setup timesheet api
 	- determine timesheet datamodel: {day, hours}
+- setup redux?
+

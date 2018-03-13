@@ -1,82 +1,27 @@
 const pgp = require('pg-promise')({});
 const db = pgp('postgres://matthewpengelly:postgres@localhost:5432/calendar');
-const _ = require('lodash');
-const uuid = require('uuid');
+const passport = require('passport');
+const session = require('express-session');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-const routes = (app) => {
-	app.get('/timesheets', async (req, res) => {
-		let result;
-		try {
-			result = await db.any(`SELECT * FROM timesheets`);
-		} catch (err) {
-			throw new Error(err);
-		}
-		res.json(result);
-	});
+const userRoutes = require('./api/users');
+const timesheetRoutes = require('./api/timesheets');
 
-	app.get('/timesheets/:id', async (req, res) => {
-		const id = req.params.id;
-		let result;
-		try {
-			result = await db.one(`SELECT * FROM timesheets WHERE id = '${id}'`);
-		} catch (err) {
-			throw new Error(err);
-		}
-		res.json(result);
-	});
+//DELETE THESE B4 COMMITTING
+const GOOGLE_CLIENT_ID = '923494464895-6s3q60psoh3j9q9r5ao5dpqmcbke6qmh.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = 'nB_CfRuzG7IQUJs2tkC1o9Ti';
 
-	app.post('/timesheets', async (req, res) => {
-		const data = req.body;
-		data.id = uuid();
-		const keys = Object.keys(data);
-		const fields = keys.map(_snakeKeys).join(',');
-		const values = keys.map(_prepValueAccessors).join(',');
+const routes = app => {
+	//TODO: setup authentication
+	/**
+	 * users api
+	 */
+	userRoutes(app, db);
 
-		try {
-			await db.none(`INSERT INTO timesheets (${fields}) VALUES (${values})`, data);
-		} catch (err) {
-			throw new Error(err);
-		}
-
-		res.send(`added timesheet ${data.id}`);
-	});
-
-	app.put('/timesheets/:id', async (req, res) => {
-		const id = req.params.id;
-		const data = req.body;
-		const keys = Object.keys(data);
-		const fields = keys.map(_snakeKeys).join(',');
-		const values = keys.map(_prepValueAccessors).join(',');
-
-		try {
-			await db.none(
-				`UPDATE timesheets SET (${fields}) = (${values}) WHERE id = '${id}'`,
-				data
-			);
-		} catch (err) {
-			throw new Error(err);
-		}
-		res.send(`updated ${id}`);
-	});
-
-	app.delete('/timesheets/:id', async (req, res) => {
-		const id = req.params.id;
-		try {
-			await db.none(`DELETE FROM timesheets WHERE id = '${id}'`);
-		} catch (err) {
-			throw new Error(err);
-		}
-
-		res.send(`deleted: ${id}`);
-	});
-};
-
-const _snakeKeys = (key) => {
-	return _.snakeCase(key);
-};
-
-const _prepValueAccessors = (val) => {
-	return '${' + val + '}';
+	/**
+	 * timesheets api
+	 */
+	timesheetRoutes(app, db);
 };
 
 module.exports = routes;
