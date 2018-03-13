@@ -4,9 +4,6 @@ import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import moment from 'moment'
 
-import TimesheetList from './TimesheetList'
-import ZoomableBarChart from './ZoomableBarChart'
-
 // a "smart" component that has state
 //  state: {
 //      timesheets: a list of timesheets returned from the backend which is passed down to the "dumb" render component TimesheetList
@@ -19,10 +16,13 @@ class TimesheetForm extends Component {
 
     this.idCounter = 1
     this.state = {
-      timesheets: [],
       day: null,
       hours: ''
     }
+
+    this.onHoursChange = this.onHoursChange.bind(this)
+    this.onDayChange = this.onDayChange.bind(this)
+    this.onSubmitClick = this.onSubmitClick.bind(this)
   }
 
   render () {
@@ -38,16 +38,15 @@ class TimesheetForm extends Component {
           id='hourInput'
           value={this.state.hours}
           label='hours'
-          onChange={this.onHoursChange.bind(this)}
+          onChange={this.onHoursChange}
         />
         <DatePicker
           id='dayInput'
           hintText='day'
-          onChange={this.onDayChange.bind(this)}
+          onChange={this.onDayChange}
           container='inline'
         />
-        <RaisedButton label='submit' onClick={this.onSubmitClick.bind(this)} />
-        <ZoomableBarChart timesheets={this.state.timesheets} />
+        <RaisedButton label='submit' onClick={this.onSubmitClick} />
       </div>
     )
   }
@@ -61,37 +60,25 @@ class TimesheetForm extends Component {
     this.setState({ day: date })
   }
 
-  componentDidMount () {
-    this.setState({
-      timesheets: [
-        { day: new Date(2015, 4, 3), hours: 5 },
-        { day: new Date(2017, 1, 1), hours: 7 },
-        { day: new Date(2018, 5, 7), hours: 5 },
-        { day: new Date(2019, 1, 1), hours: 5 },
-        { day: new Date(2018, 2, 6), hours: 2 },
-        { day: new Date(2017, 4, 3), hours: 5 },
-        { day: new Date(2019, 1, 1), hours: 10 },
-        { day: new Date(2018, 5, 11), hours: 10 }
-      ]
-    })
-  }
-
-
   onSubmitClick (e) {
     if (!this.state.day || !this.state.hours) {
       console.log('missing input fields')
       return
     }
     // todo: access state for day and hours and send POST request to '/timesheets'
-    const timesheet = {
+    const sheet = {
       id: this.idCounter++,
       hours: parseFloat(this.state.hours),
       formatted_day: moment(this.state.day).format('YYYY/MM/DD'),
       day: this.state.day
     }
+
+    // lift state up
+    this.props.createTimesheet(sheet)
+    this.resetInputs()
+  }
+  resetInputs () {
     this.setState({
-      timesheets: this.state.timesheets.concat(timesheet),
-      day: null,
       hours: ''
     })
   }
